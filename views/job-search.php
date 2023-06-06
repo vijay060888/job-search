@@ -12,7 +12,7 @@ $salary_to = $_POST['salary_to'];
 
 //$js_arr = [$job_title,$experience_from,$experience_to,$job_type,$salary_from,$salary_to];
 $js_arr = array(
-    "job_title" => "$job_title",
+    "job_title" => "%$job_title%",
     "experience_from" => "$experience_from",
     "experience_to" => "$experience_to",
     "job_type" => "$job_type",

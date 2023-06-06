@@ -20,21 +20,32 @@
                 if($value == ''){
 
                 }else {
-                $whereConditions[] = "{$js_ar} = '{$value}'";
+                    if ($js_ar === 'job_type') {
+                        // Apply equal operator
+                        $whereConditions[] = "{$js_ar} = '{$value}'";
+                    } elseif ($js_ar === 'job_title') {
+                        // Apply like operator
+                        $whereConditions[] = "{$js_ar} LIKE '%{$value}%'";
+                    } else {
+                        $whereConditions[] = "{$js_ar} = '{$value}'";
+                    }
                 }
+                
             }
             
             if (!empty($whereConditions)) {
                 $whereClause = "WHERE " . implode(" AND ", $whereConditions);
-                $sqlQuery .= " {%$whereClause%}";
+                $sqlQuery .= " {$whereClause}";
             }
-            echo $sqlQuery;
+            echo $sqlQuery .= "order by created_at desc limit 5";
             //exit;
            
             $stmt = $this->conn->prepare($sqlQuery);
             $stmt->execute();
             return $stmt;
         }
+
+       
     }
 
 ?>
